@@ -19,7 +19,7 @@ endfu
 
 function! s:refreshView()
     let bufnr = expand('<bufnr>')
-    call s:system("curl -X PUT -T - http://localhost:8090/ &>/dev/null &",
+    call s:system("curl -X PUT -T - http://localhost:8090/",
                 \ s:bufGetContents(bufnr))
 endfu
 
@@ -46,7 +46,7 @@ function! s:popBuffer(bufnr)
 endfu
 
 function! s:killDaemon()
-    call system("curl -s -X DELETE http://localhost:8090/ &>/dev/null &")
+    call system("curl -s -X DELETE http://localhost:8090/")
 endfu
 
 function! s:bufGetContents(bufnr)
