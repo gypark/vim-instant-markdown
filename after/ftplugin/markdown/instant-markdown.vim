@@ -125,7 +125,7 @@ if g:instant_markdown_autostart
         au! * <buffer>
         au BufEnter <buffer> call s:refreshView()
         if g:instant_markdown_slow
-          au CursorHold,BufWrite,InsertLeave <buffer> call s:temperedRefresh()
+          au CursorHold,CursorHoldI,BufWrite,InsertLeave <buffer> call s:temperedRefresh()
         else
           au CursorHold,CursorHoldI,CursorMoved,CursorMovedI <buffer> call s:temperedRefresh()
         endif
