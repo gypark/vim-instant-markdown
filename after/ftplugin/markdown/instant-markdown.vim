@@ -15,12 +15,21 @@ function! s:system(cmd, stdin)
     else
         call system(a:cmd, a:stdin)
     endif
+    return v:shell_error
 endfu
 
 function! s:refreshView()
     let bufnr = expand('<bufnr>')
-    call s:system("curl -X PUT -T - http://localhost:8090/",
-                \ s:bufGetContents(bufnr))
+    " prevent block-and-waiting for STDIN
+    let mdtext = s:bufGetContents(bufnr)
+    if strlen(mdtext) == 0
+        let mdtext = " "
+    endif
+
+    let res = s:system("curl -X PUT -T - http://localhost:8090/",
+                \ mdtext)
+
+    " TODO: res == 7 means server has been down. restart?
 endfu
 
 function! s:startDaemon(initialMD)
@@ -135,3 +144,4 @@ if g:instant_markdown_autostart
 else
     command! -buffer InstantMarkdownPreview call s:previewMarkdown()
 endif
+
