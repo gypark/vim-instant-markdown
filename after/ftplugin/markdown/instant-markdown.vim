@@ -24,7 +24,9 @@ function! s:refreshView()
 endfu
 
 function! s:startDaemon(initialMD)
-    call s:system("instant-markdown-d &>/dev/null &", a:initialMD)
+    call s:system("nodemd.cmd", "")
+    sleep 1
+    call s:refreshView()
 endfu
 
 function! s:initDict()
